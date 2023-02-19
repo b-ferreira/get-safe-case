@@ -27,3 +27,9 @@ yarn-debug.log*
 yarn-error.log*
 
 .eslintcache
+
+.next
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

@@ -1,11 +1,11 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link';
+import React from 'react';
 
 interface SummaryStepProps {
   collectedData: {
-    email: string
-    age: number
-  }
+    email: string;
+    age: number;
+  };
 }
 
 const SummaryStep: React.FC<SummaryStepProps> = (props) => {
@@ -14,10 +14,10 @@ const SummaryStep: React.FC<SummaryStepProps> = (props) => {
       <div>Email: {props.collectedData.email}</div>
       <div>Age: {props.collectedData.age}</div>
       <div>
-        <Link to="/purchased=dev_ins">Purchase</Link>
+        <Link href="/">Purchase</Link>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default SummaryStep
+export default SummaryStep;
