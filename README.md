@@ -1,46 +1,25 @@
-# Getting Started with Create React App
+# Main changes
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### Replaced CRA with NextJS
 
-## Available Scripts
+The goal with this change was to stablish the foundation of a production-ready code base.  
+NextJS has an easy and incremental migration, and by using it we have many features for a more scalable and reliable project out of the box.
 
-In the project directory, you can run:
+#### Updated quality aspects of the project
 
-### `yarn start`
+Some of the configurations for linting, testing, and type-checking was missing in the project.  
+Support for ESLint and Jest was added, and the Typescript configuration was improved.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### Usage of Zod for schema validation
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+One of the aspects of the project was that every "Flow Step" should be validated before allowing the user to proceed.
+Zod was added in order to facilidate this job, and also to help with the definition of the steps types through the schemas for each step.
 
-### `yarn test`
+#### Refactored BuyFlow and Steps components
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The logic of BuyFlow was coupled to its rendering function. Now the component works with a type-safe array of steps and implements a custom rendering logic for each step.  
+The data aggregation is still similar, however now it's easier to just define what steps a flow will operate with using a single prop.
 
-### `yarn build`
+#### Added unit tests
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Unit tests was added for most of the components and also for the form validation hook.
