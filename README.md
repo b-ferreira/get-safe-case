@@ -1,3 +1,21 @@
+# Setup
+
+In order to setup the project and run it locally in dev mode execute the following commands in the root folder of the project:
+
+```shell
+# install the dependencies
+yarn
+
+# start the app in dev mode on localhost:3000
+yarn start:dev
+
+# For testing:
+yarn test
+
+# For linting:
+yarn lint
+```
+
 # Main changes
 
 #### Replaced CRA with NextJS
