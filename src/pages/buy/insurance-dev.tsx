@@ -1,5 +1,5 @@
-import Buyflow, { ProductIds } from '@components/buyflow/Buyflow';
+import Flow from '@components/Flow';
 
 export default function InsuranceDev() {
-  return <Buyflow productId={ProductIds.devIns} />;
+  return <Flow steps={['age', 'email']} />;
 }

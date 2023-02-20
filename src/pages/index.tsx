@@ -20,8 +20,13 @@ export default function Home() {
         />
       </header>
       <main>
-        <p>{"Welcome to Getsafe's Developer Insurance"}</p>
-        <Link href="/buy/insurance-dev">Get started!</Link>
+        <p>{"Welcome to Getsafe's Insurance"}</p>
+        <div>
+          <Link href="/buy/insurance-dev">Buy Developer Insurance</Link>
+        </div>
+        <div>
+          <Link href="/buy/insurance-designer">Buy Designer Insurance</Link>
+        </div>
       </main>
     </>
   );
