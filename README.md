@@ -1,5 +1,11 @@
 # Setup
 
+## Requirements
+
+Node v14 or v16
+
+## Scripts
+
 In order to setup the project and run it locally in dev mode execute the following commands in the root folder of the project:
 
 ```shell
