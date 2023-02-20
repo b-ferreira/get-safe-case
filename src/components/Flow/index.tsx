@@ -38,6 +38,8 @@ const Flow: React.FC<FlowProps> = ({ steps }) => {
   const [collectedData, setCollectedData] = useState<CollectedData>({});
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
 
+  const uniqSteps = [...new Set<AvailableSteps>(steps)];
+
   const handleNextStepCall: NextStepFn = (id, data) => {
     setCollectedData((x) => ({
       ...x,
@@ -46,7 +48,7 @@ const Flow: React.FC<FlowProps> = ({ steps }) => {
     setCurrentStepIndex((x) => x + 1);
   };
 
-  if (steps?.length === 0) {
+  if (uniqSteps?.length === 0) {
     return (
       <>
         <div>
@@ -59,8 +61,8 @@ const Flow: React.FC<FlowProps> = ({ steps }) => {
     );
   }
 
-  return currentStepIndex < steps?.length ? (
-    renderStepById(steps[currentStepIndex], handleNextStepCall)
+  return currentStepIndex < uniqSteps?.length ? (
+    renderStepById(uniqSteps[currentStepIndex], handleNextStepCall)
   ) : (
     <Summary data={collectedData} />
   );
