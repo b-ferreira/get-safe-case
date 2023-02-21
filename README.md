@@ -44,6 +44,10 @@ Zod was added in order to facilidate this job, and also to help with the definit
 The logic of BuyFlow was coupled to its rendering function. Now the component works with a type-safe array of steps and implements a custom rendering logic for each step.  
 The data aggregation is still similar, however now it's easier to just define what steps a flow will operate with using a single prop.
 
+#### Created FlowProvider to keep flow logic management
+
+The logic necessary to define and operate the flows were moved to a provider, so that every step component has easy access to the resources they need to run the flow and access the collected data.
+
 #### Added unit tests
 
 Unit tests was added for most of the components and also for the form validation hook.
