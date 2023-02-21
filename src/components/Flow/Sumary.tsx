@@ -1,11 +1,9 @@
 import Link from 'next/link';
 import React from 'react';
 
-import { AvailableSteps, FlowData } from './Steps/Steps.types';
+import { useFlow } from '@hooks/useFlow';
 
-interface SummaryProps {
-  data: DeepPartial<FlowData>;
-}
+import { AvailableSteps, FlowData } from './Steps/Steps.types';
 
 type SummaryByKeyProps = {
   field: AvailableSteps;
@@ -32,15 +30,18 @@ const SummaryByKey: React.FC<SummaryByKeyProps> = ({ field, data }) => {
   }
 };
 
-const Summary: React.FC<SummaryProps> = ({ data }) => (
-  <>
-    {Object.keys(data ?? {}).map((x) => (
-      <SummaryByKey key={x} field={x} data={data} />
-    ))}
-    <div>
-      <Link href="/">Purchase</Link>
-    </div>
-  </>
-);
+const Summary: React.FC = () => {
+  const { data } = useFlow();
+  return (
+    <>
+      {Object.keys(data ?? {}).map((x) => (
+        <SummaryByKey key={x} field={x} data={data} />
+      ))}
+      <div>
+        <Link href="/">Purchase</Link>
+      </div>
+    </>
+  );
+};
 
 export default Summary;

@@ -1,12 +1,13 @@
 import React from 'react';
 
+import { useFlowNext } from '@hooks/useFlowNext';
 import { useFormValidation } from '@hooks/useFormValidation';
 
 import { EmailSchema } from './Steps.schema';
-import { FlowStep } from './Steps.types';
 
-const EmailStep: React.FC<FlowStep> = ({ next }) => {
+const EmailStep: React.FC = () => {
   const { validationStatus, validate } = useFormValidation(EmailSchema);
+  const { next } = useFlowNext();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     validate({ email: e.target.value ?? '' });

@@ -6,9 +6,10 @@ export type AvailableSteps = 'email' | 'age' | 'identification';
 
 export type NextStepFn = (id: AvailableSteps, data: any) => void;
 
-export type FlowStep = {
-  next: NextStepFn;
-};
+export interface StepItem {
+  id: AvailableSteps;
+  stepComponent: React.FC;
+}
 
 export type AgeStepType = z.infer<typeof AgeSchema>;
 

@@ -1,11 +1,12 @@
 import React from 'react';
 
+import { useFlowNext } from '@hooks/useFlowNext';
 import { useFormValidation } from '@hooks/useFormValidation';
 
 import { AgeSchema } from './Steps.schema';
-import { FlowStep } from './Steps.types';
 
-const AgeStep: React.FC<FlowStep> = ({ next }) => {
+const AgeStep: React.FC = () => {
+  const { next } = useFlowNext();
   const { validationStatus, validate } = useFormValidation(AgeSchema);
 
   const handleAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => {

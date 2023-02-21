@@ -1,10 +1,32 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import FlowProvider from '@components/Flow/FlowProvider';
 import IdentificationStep from '@components/Flow/Steps/IdentificationStep';
+import { StepItem } from '@components/Flow/Steps/Steps.types';
 
-const setup = (next = jest.fn) => {
-  const utils = render(<IdentificationStep next={next} />);
+import * as useFlowNext from '@hooks/useFlowNext';
+
+jest.mock('@hooks/useFlowNext', () => ({
+  __esModule: true,
+  ...(jest.requireActual('@hooks/useFlowNext') as typeof useFlowNext),
+}));
+
+const wrapper = (
+  steps: StepItem[]
+): React.FC<{ children: React.ReactNode }> => {
+  return function InnerWrapper({ children }) {
+    return <FlowProvider steps={steps}>{children}</FlowProvider>;
+  };
+};
+
+const setup = () => {
+  const WrapperComponent = wrapper([]);
+  const utils = render(
+    <WrapperComponent>
+      <IdentificationStep />
+    </WrapperComponent>
+  );
   const button = screen.getByRole('button');
   const firstNameInput = screen.getByLabelText('first-name-input');
   const lastNameInput = screen.getByLabelText('last-name-input');
@@ -46,15 +68,18 @@ describe('EmailStep', () => {
   });
 
   it('calls provided next function if form is valid', async () => {
-    const nextCallback = jest.fn();
-    const { firstNameInput, lastNameInput, button } = setup(nextCallback);
+    const { firstNameInput, lastNameInput, button } = setup();
+    const nextMock = jest.fn();
+    jest.spyOn(useFlowNext, 'useFlowNext').mockImplementation(() => ({
+      next: nextMock,
+    }));
 
     fireEvent.change(firstNameInput, { target: { value: 'Jhon' } });
     fireEvent.change(lastNameInput, { target: { value: 'Doe' } });
     await userEvent.click(button);
 
-    expect(nextCallback).toHaveBeenCalled();
-    expect(nextCallback).toHaveBeenCalledWith('identification', {
+    expect(nextMock).toHaveBeenCalled();
+    expect(nextMock).toHaveBeenCalledWith('identification', {
       identification: {
         firstName: 'Jhon',
         lastName: 'Doe',

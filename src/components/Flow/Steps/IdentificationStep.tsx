@@ -1,11 +1,13 @@
 import React from 'react';
 
+import { useFlowNext } from '@hooks/useFlowNext';
 import { useFormValidation } from '@hooks/useFormValidation';
 
 import { IdentificationSchema } from './Steps.schema';
-import { FlowStep, IdentificationType } from './Steps.types';
+import { IdentificationType } from './Steps.types';
 
-const IdentificationStep: React.FC<FlowStep> = ({ next }) => {
+const IdentificationStep: React.FC = () => {
+  const { next } = useFlowNext();
   const { validationStatus, validate } = useFormValidation(
     IdentificationSchema
   );

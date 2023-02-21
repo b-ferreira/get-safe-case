@@ -2,10 +2,37 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import Flow from '@components/Flow';
-import { AvailableSteps } from '@components/Flow/Steps/Steps.types';
+import FlowProvider from '@components/Flow/FlowProvider';
+import AgeStep from '@components/Flow/Steps/AgeStep';
+import EmailStep from '@components/Flow/Steps/EmailStep';
+import { AvailableSteps, StepItem } from '@components/Flow/Steps/Steps.types';
 
-const setup = (steps: AvailableSteps[] = ['age', 'email']) => {
-  const utils = render(<Flow steps={steps} />);
+const wrapper = (
+  steps: StepItem[]
+): React.FC<{ children: React.ReactNode }> => {
+  return function InnerWrapper({ children }) {
+    return <FlowProvider steps={steps}>{children}</FlowProvider>;
+  };
+};
+
+const setup = (
+  steps: StepItem[] = [
+    {
+      id: 'age',
+      stepComponent: AgeStep,
+    },
+    {
+      id: 'email',
+      stepComponent: EmailStep,
+    },
+  ]
+) => {
+  const WrapperComponent = wrapper(steps);
+  const utils = render(
+    <WrapperComponent>
+      <Flow />
+    </WrapperComponent>
+  );
 
   return {
     ...utils,

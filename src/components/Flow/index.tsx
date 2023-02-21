@@ -1,54 +1,14 @@
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React from 'react';
 
-import AgeStep from '@components/Flow/Steps/AgeStep';
-import EmailStep from '@components/Flow/Steps/EmailStep';
-import IdentificationStep from '@components/Flow/Steps/IdentificationStep';
-import {
-  AvailableSteps,
-  FlowData,
-  NextStepFn,
-} from '@components/Flow/Steps/Steps.types';
+import { useFlow } from '@hooks/useFlow';
 
 import Summary from './Sumary';
 
-interface FlowProps {
-  steps: AvailableSteps[];
-}
+const Flow: React.FC = () => {
+  const { currentStep, steps } = useFlow();
 
-type CollectedData = DeepPartial<FlowData>;
-
-function renderStepById(id: AvailableSteps, next: NextStepFn) {
-  switch (id) {
-    case 'age':
-      return <AgeStep next={next} />;
-
-    case 'email':
-      return <EmailStep next={next} />;
-
-    case 'identification':
-      return <IdentificationStep next={next} />;
-
-    default:
-      return null;
-  }
-}
-
-const Flow: React.FC<FlowProps> = ({ steps }) => {
-  const [collectedData, setCollectedData] = useState<CollectedData>({});
-  const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
-
-  const uniqSteps = [...new Set<AvailableSteps>(steps)];
-
-  const handleNextStepCall: NextStepFn = (id, data) => {
-    setCollectedData((x) => ({
-      ...x,
-      [id]: data?.[id],
-    }));
-    setCurrentStepIndex((x) => x + 1);
-  };
-
-  if (uniqSteps?.length === 0) {
+  if (steps?.length === 0) {
     return (
       <>
         <div>
@@ -61,11 +21,12 @@ const Flow: React.FC<FlowProps> = ({ steps }) => {
     );
   }
 
-  return currentStepIndex < uniqSteps?.length ? (
-    renderStepById(uniqSteps[currentStepIndex], handleNextStepCall)
-  ) : (
-    <Summary data={collectedData} />
-  );
+  if (currentStep) {
+    const Step = currentStep.stepComponent;
+    return <Step />;
+  }
+
+  return <Summary />;
 };
 
 export default Flow;
