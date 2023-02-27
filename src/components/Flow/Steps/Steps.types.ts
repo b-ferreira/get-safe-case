@@ -4,7 +4,10 @@ import { AgeSchema, EmailSchema, IdentificationSchema } from './Steps.schema';
 
 export type AvailableSteps = 'email' | 'age' | 'identification';
 
-export type NextStepFn = (id: AvailableSteps, data: any) => void;
+export type NextStepFn = <T extends Partial<Record<AvailableSteps, unknown>>>(
+  id: AvailableSteps,
+  data: T
+) => void;
 
 export interface StepItem {
   id: AvailableSteps;
